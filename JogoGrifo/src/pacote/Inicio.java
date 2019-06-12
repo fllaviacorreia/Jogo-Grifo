@@ -16,6 +16,7 @@ public class Inicio extends JFrame {
 	private JButton inicio;
 	//mudei aqui 
 	//Eu Eder mudei aqui também 
+	// Eu Flávia alterei aqui
 	public Inicio() {		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1024, 800);
