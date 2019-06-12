@@ -14,7 +14,7 @@ public class Inicio extends JFrame {
 	private JPanel GameOver;
 	private JLabel fundo;
 	private JButton inicio;
-	
+	//mudei aqui 
 	public Inicio() {		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1024, 800);
