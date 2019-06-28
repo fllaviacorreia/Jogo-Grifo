@@ -24,6 +24,7 @@ public class Jogo extends JFrame {
 	private JPanel painelInicio;	
 	private JButton botaoPlay;
 	private boolean pulo = false;
+	private int vidas;
 	
 	public Jogo() {
  
@@ -33,7 +34,7 @@ public class Jogo extends JFrame {
 		setVisible(true);
 		setTitle("Crocodilo Perdido");
 		setResizable(false);
-		
+		vidas = 3;
 		painelJogo = new JPanel();
 		painelJogo.setLayout(null);
 		setContentPane(painelJogo);
@@ -180,42 +181,95 @@ public class Jogo extends JFrame {
 
 	public void bateu() {
 		if(crocodilo.getBounds().intersects(obs2.getBounds())) {
-			new Thread() {
-				public void run() {
-					crocodilo.setBounds(getCrocodilo().getX(), 4000, 100, 100);
-					crocodilo.setVisible(false);
-					obs2.setVisible(false);
-				}
-			}.start();
-			
-			new Thread() {
-				public void run() {
-					playSound("GameOver");
-				}
-			}.start();
-			
-			new Thread() {
+			if(vidas > 3) {
+				vidas--;
+				new Thread() {
+					public void run() {
+						crocodilo.setBounds(getCrocodilo().getX(), 4000, 100, 100);
+						crocodilo.setVisible(false);
+						obs2.setVisible(false);
+						}
+				}.start();
 				
-				public void run() {
-					painelJogo.setBackground(Color.BLACK);
-					fundo.setBounds(0, 0, 2000, 4000);
-					fundo.setIcon(null);
-					fundo2.setIcon(new ImageIcon(getClass().getResource("img\\game over.jpg")));
-					fundo2.setBounds(300, -750, 2000, 2000);
-					
-				}
-			}.start();
-			
-			new Thread() {
-				public void run() {
-					try {
-						Thread.sleep(9000);
-						System.exit(0);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				new Thread() {
+					public void run() {
+						playSound("somCoracaoPartido");
 					}
-				}
-			}.start();
+				}.start();	
+				
+				new Thread() {
+					public void run() {
+						painelJogo.setBackground(Color.BLACK);
+						fundo.setBounds(0, 0, 1000, 400);
+						fundo.setIcon(null);
+						fundo2.setIcon(new ImageIcon(getClass().getResource("img\\coracaoPartido.gif")));
+						fundo2.setBounds(0, 0, 2000, 2000);
+						}
+				}.start();
+						
+				new Thread() {
+					public void run() {
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}.start();
+				
+				new Thread() {
+					public void run() {
+						crocodilo.setBounds(getCrocodilo().getX(), 190, 160, 150);
+						crocodilo.setVisible(true);
+						obs2.setVisible(true);
+						fundo.setBounds(0, 0, 2500, 1000);
+						fundo.setIcon(new ImageIcon(getClass().getResource("img\\montanha.jpg")));
+						fundo2.setBounds(1024, 0, 2500, 1000);
+						fundo2.setIcon(new ImageIcon(getClass().getResource("img\\montanha.jpg")));
+					}
+				}.start();	
+				
+				movimentar();
+			}
+			else {
+				new Thread() {
+					public void run() {
+						crocodilo.setBounds(getCrocodilo().getX(), 4000, 100, 100);
+						crocodilo.setVisible(false);
+						obs2.setVisible(false);
+					}
+				}.start();
+				
+				new Thread() {
+					public void run() {
+						playSound("GameOver");
+					}
+				}.start();
+				
+				new Thread() {
+					
+					public void run() {
+						painelJogo.setBackground(Color.BLACK);
+						fundo.setBounds(0, 0, 2000, 4000);
+						fundo.setIcon(null);
+						fundo2.setIcon(new ImageIcon(getClass().getResource("img\\game over.jpg")));
+						fundo2.setBounds(300, -750, 2000, 2000);
+						
+					}
+				}.start();
+				
+				new Thread() {
+					public void run() {
+						try {
+							Thread.sleep(9000);
+							System.exit(0);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}.start();
+			}
+			
 			
 		}
 	}
